@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class Alice extends Pane {
+public class Alice extends Entity{
 	public Point2D playerVelocity = new Point2D(0, 0);
 	protected boolean canJump = true;
 	Image CharacterImg = new Image(getClass().getResourceAsStream("AlicePic.png"));
@@ -18,7 +18,6 @@ public class Alice extends Pane {
 	int offsetY = 0;
 	int width = 58;
 	int height = 95;
-	public Animation animation;
 
 	public Alice() {
 		// ขนาดตัวละคร
@@ -30,6 +29,7 @@ public class Alice extends Pane {
 		getChildren().addAll(this.imageView);
 	}
 
+	@Override
 	public void walkX(int value) {
 		boolean movingRight = value > 0;
 		for (int i = 0; i < Math.abs(value); i++) {
@@ -65,7 +65,7 @@ public class Alice extends Pane {
 						}
 					} else {
 						if (this.getTranslateY() == platform.getTranslateY() + GameMain.BLOCK_SIZE) {
-							this.setTranslateY(this.getTranslateY() + 1);
+							this.setTranslateY(this.getTranslateY() + 5);
 							playerVelocity = new Point2D(0, 10);
 							return;
 						}
@@ -84,7 +84,7 @@ public class Alice extends Pane {
 	public void jumpPlayer() {
 		if (canJump) {
 			// ความสูงการกระโดด
-			playerVelocity = playerVelocity.add(0, -30);
+			playerVelocity = playerVelocity.add(0, -25);
 			canJump = false;
 		}
 	}
