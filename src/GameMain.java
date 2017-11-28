@@ -18,6 +18,10 @@ public class GameMain extends Application {
 	public static final int BLOCK_SIZE = 45;
 	public static final int CHAR_SIZE_X = 58;
 	public static final int CHAR_SIZE_Y = 95;
+	
+	private int state;
+	public static final int IDLE = 0;
+	public static final int CLIMB = 1;
 
 	public static Pane appRoot = new Pane();
 	public static Pane gameRoot = new Pane();
