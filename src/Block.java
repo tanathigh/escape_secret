@@ -1,14 +1,14 @@
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Block extends Pane {
-	Image blocksImg = new Image(getClass().getResourceAsStream("1.png"));
+	Image blocksImg = new Image(getClass().getResourceAsStream("ob1.png"));
 	ImageView block;
-
 	public enum BlockType {
-		PLATFORM, BRICK, BONUS, PIPE_TOP, PIPE_BOTTOM, INVISIBLE_BLOCK, STONE
+		FLOOR1, FLOOR2, BONUS, PIPE_TOP, PIPE_BOTTOM, INVISIBLE_BLOCK, STONE;
 	}
 
 	public Block(BlockType blockType, int x, int y) {
@@ -19,29 +19,29 @@ public class Block extends Pane {
 		setTranslateY(y);
 
 		switch (blockType) {
-		case PLATFORM:
-			block.setViewport(new Rectangle2D(0, 0, 16, 16));
+		case FLOOR1:
+			block.setViewport(new Rectangle2D(0, 0, 30, 16));
+			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
-		case BRICK:
-			block.setViewport(new Rectangle2D(16, 0, 16, 16));
+		case FLOOR2:
+			block.setViewport(new Rectangle2D(34, 0, 27, 16));
+			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
 		case BONUS:
-			block.setViewport(new Rectangle2D(384, 0, 16, 16));
+			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			break;
 		case PIPE_TOP:
-			block.setViewport(new Rectangle2D(0, 128, 32, 16));
-			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
+			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			break;
 		case PIPE_BOTTOM:
-			block.setViewport(new Rectangle2D(0, 145, 32, 14));
-			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
+			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			break;
 		case INVISIBLE_BLOCK:
-			block.setViewport(new Rectangle2D(0, 0, 16, 16));
+			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			block.setOpacity(0);
 			break;
 		case STONE:
-			block.setViewport(new Rectangle2D(0, 16, 16, 16));
+			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			break;
 		}
 		getChildren().add(block);
