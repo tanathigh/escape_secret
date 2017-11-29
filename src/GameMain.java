@@ -69,7 +69,8 @@ public class GameMain extends Application {
 		canvas = new Canvas(3392,620);
 		gc = canvas.getGraphicsContext2D();
 		gc.fillRect(0, 0, 3392, 620);
-		gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
+		//gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
+		clearCircle(player.getTranslateX(), player.getTranslateY(), 200, gc);
 		gameRoot.getChildren().add(player);
 		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
@@ -95,7 +96,8 @@ public class GameMain extends Application {
 		player.jumpY((int) player.playerVelocity.getY());
 		gc.clearRect(0, 0, 3392, 620);
 		gc.fillRect(0, 0, 3392, 620);
-		gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
+		//gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
+		clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
 	}
 
 	private boolean isPressed(KeyCode key) {
@@ -122,6 +124,18 @@ public class GameMain extends Application {
 			}
 		};
 		timer.start();
+	}
+	
+	public void clearCircle(double x, double y, int r, GraphicsContext gc) {
+		for (int rad = 0;rad<90;rad+=1) {
+			double dx = x - r * Math.cos(rad);
+			double dy = y - r * Math.sin(rad);
+			double w = r * 2 * Math.cos(rad);
+			double h = r * 2 * Math.sin(rad);
+			gc.clearRect(dx, dy, w, h);
+	
+		}
+		
 	}
 
 	public static void main(String[] args) {

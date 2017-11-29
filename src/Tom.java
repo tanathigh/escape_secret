@@ -102,5 +102,5 @@ public class Tom extends Entity {
 		animation = new Animation(this.imageView, Duration.millis(800), 6, 6, 260, 0, width, height);
 		getChildren().addAll(this.imageView);
 	}
-
+	
 }
