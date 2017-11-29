@@ -3,6 +3,8 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -34,6 +36,9 @@ public class GameMain extends Application {
 	public static Pane gameRoot = new Pane();
 
 	public Tom player;
+	
+	Canvas canvas;
+	GraphicsContext gc;
 
 	private void initContent(String[] level) {
 		ImageView background = new ImageView(backgroundImg);
@@ -60,7 +65,13 @@ public class GameMain extends Application {
 				player.isDead = false;
 			}
 		});
+		
+		canvas = new Canvas(3392,620);
+		gc = canvas.getGraphicsContext2D();
+		gc.fillRect(0, 0, 3392, 620);
+		gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
 		gameRoot.getChildren().add(player);
+		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
 	}
 
@@ -82,6 +93,9 @@ public class GameMain extends Application {
 			player.playerVelocity = player.playerVelocity.add(0, 1);
 		}
 		player.jumpY((int) player.playerVelocity.getY());
+		gc.clearRect(0, 0, 3392, 620);
+		gc.fillRect(0, 0, 3392, 620);
+		gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
 	}
 
 	private boolean isPressed(KeyCode key) {
