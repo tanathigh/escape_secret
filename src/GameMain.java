@@ -17,8 +17,8 @@ import java.util.HashMap;
 
 public class GameMain extends Application {
 	public static ArrayList<Block> platforms = new ArrayList<>();
-	public static ArrayList<Trap> events = new ArrayList<>();
 	public static ArrayList<Trap> killers = new ArrayList<>();
+	public static ArrayList<Monster> monsters = new ArrayList<>();
 	private HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG.jpg"));
@@ -30,14 +30,16 @@ public class GameMain extends Application {
 	public static final int CHAR_SIZE_Y = 65;
 
 	private int state;
+	private int monsterState = 1;
 	public static final int IDLE = 0;
 	public static final int CLIMB = 1;
 
 	public static Pane appRoot = new Pane();
 	public static Pane gameRoot = new Pane();
 
-	public Tom player;
-	
+	public static Tom player = new Tom();
+	public Minotaur minotaur = new Minotaur();
+
 	Canvas canvas;
 	GraphicsContext gc;
 
@@ -46,38 +48,47 @@ public class GameMain extends Application {
 		background.setFitHeight(14 * BLOCK_SIZE);
 		background.setFitWidth(70 * BLOCK_SIZE);
 		levelData.setBlock(level);
-		player = new Tom();
 		player.walk();
 		player.setTranslateX(0);
 		player.setTranslateY(400);
 		player.translateXProperty().addListener((obs, old, newValue) -> {
 			int offset = newValue.intValue();
-			// blackground กับ root เดินตาม
+			// background กับ root เดินตาม
 			if (offset > 640 && offset < levelData.levelWidth - 640) {
 				gameRoot.setLayoutX(-(offset - 640));
 				background.setLayoutX(-(offset - 640));
 			}
-			/*if (player.isDead == true) {
-				player.setTranslateX(0);
-				player.setTranslateY(400);
-				gameRoot.setLayoutX(0);
-				background.setLayoutX(0);
-				player.isDead = false;
-				clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
-			}*/
 		});
-		
-		canvas = new Canvas(3392,620);
+		// *****************************************************
+		minotaur = new Minotaur();
+		minotaur.walk();
+		minotaur.setTranslateX(300);
+		minotaur.setTranslateY(450);
+		// *****************************************************
+		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
-		gc.fillRect(0, 0, 3392, 620);
-		//gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
-		clearCircle(player.getTranslateX(), player.getTranslateY(), 200, gc);
+		/*
+		 * gc.fillRect(0, 0, 3392, 620); // gc.clearRect(player.getTranslateX()-50,
+		 * player.getTranslateY()-100, 200, // 200); clearCircle(player.getTranslateX(),
+		 * player.getTranslateY(), 200, gc);
+		 */
+		gameRoot.getChildren().add(minotaur);
 		gameRoot.getChildren().add(player);
 		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
 	}
 
 	private void update() {
+		
+		minotaur.animation.play();
+		if (minotaur.isStructed) {
+			minotaur.setScaleX(1);
+			minotaur.walkX(-2 * monsterState);
+		} else {
+			minotaur.setScaleX(-1);
+			minotaur.walkX(2 * monsterState);
+		}
+		
 		if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
 			player.jumpPlayer();
 		}
@@ -95,17 +106,24 @@ public class GameMain extends Application {
 			player.playerVelocity = player.playerVelocity.add(0, 1);
 		}
 		player.jumpY((int) player.playerVelocity.getY());
-		gc.clearRect(0, 0, 3392, 620);
-		gc.fillRect(0, 0, 3392, 620);
-		//gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
-		clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
+		/*
+		 * gc.clearRect(0, 0, 3392, 620); gc.fillRect(0, 0, 3392, 620);
+		 */
+		// gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200,
+		// 200);
+		// clearCircle(player.getTranslateX() + player.getWidth(),
+		// player.getTranslateY() + player.getHeight(), 200, gc);
+
 		if (player.isDead == true) {
 			player.setTranslateX(0);
 			player.setTranslateY(400);
 			gameRoot.setLayoutX(0);
 			background.setLayoutX(0);
 			player.isDead = false;
-			clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
+			/*
+			 * clearCircle(player.getTranslateX() + player.getWidth(),
+			 * player.getTranslateY() + player.getHeight(), 200, gc);
+			 */
 		}
 	}
 
@@ -134,17 +152,17 @@ public class GameMain extends Application {
 		};
 		timer.start();
 	}
-	
+
 	public void clearCircle(double x, double y, int r, GraphicsContext gc) {
-		for (int rad = 0;rad<90;rad+=1) {
+		for (int rad = 0; rad < 90; rad += 1) {
 			double dx = x - r * Math.cos(rad);
 			double dy = y - r * Math.sin(rad);
 			double w = r * 2 * Math.cos(rad);
 			double h = r * 2 * Math.sin(rad);
 			gc.clearRect(dx, dy, w, h);
-	
+
 		}
-		
+
 	}
 
 	public static void main(String[] args) {

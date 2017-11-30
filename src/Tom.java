@@ -13,14 +13,14 @@ public class Tom extends Entity {
 	Image CharacterImg = new Image(getClass().getResourceAsStream("tom.png"));
 	ImageView imageView = new ImageView(CharacterImg);
 	// จำนวนเฟรม
-	int count = 4;
-	int columns = 4;
-	int offsetX = 0;
-	int offsetY = 0;
-	int width = 65;
-	int height = 65;
 
 	public Tom() {
+		this.count = 4;
+		this.columns = 4;
+		this.offsetX = 0;
+		this.offsetY = 0;
+		this.width = 65;
+		this.height = 65;
 	}
 
 	public void walk() {
@@ -107,5 +107,5 @@ public class Tom extends Entity {
 		animation = new Animation(this.imageView, Duration.millis(800), 6, 6, 260, 0, width, height);
 		getChildren().addAll(this.imageView);
 	}
-	
+
 }
