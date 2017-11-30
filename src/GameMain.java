@@ -97,7 +97,7 @@ public class GameMain extends Application {
 		gc.clearRect(0, 0, 3392, 620);
 		gc.fillRect(0, 0, 3392, 620);
 		//gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
-		clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
+		clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 300, gc);
 	}
 
 	private boolean isPressed(KeyCode key) {
@@ -115,6 +115,8 @@ public class GameMain extends Application {
 			player.animation.stop();
 		});
 		primaryStage.setTitle("Escape");
+		SceneManager.initialize(primaryStage);
+		SceneManager.gotoMainMenu();
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		AnimationTimer timer = new AnimationTimer() {
