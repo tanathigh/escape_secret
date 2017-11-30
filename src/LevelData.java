@@ -39,7 +39,6 @@ public class LevelData {
 				case '6':
 					Trap PipeBottomBlock = new Trap(j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-
 				}
 			}
 
