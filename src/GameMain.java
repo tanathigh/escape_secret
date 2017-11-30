@@ -22,6 +22,7 @@ public class GameMain extends Application {
 	private HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG.jpg"));
+	ImageView background = new ImageView(backgroundImg);
 	LevelData levelData = new LevelData();
 
 	public static final int BLOCK_SIZE = 45;
@@ -41,7 +42,6 @@ public class GameMain extends Application {
 	GraphicsContext gc;
 
 	private void initContent(String[] level) {
-		ImageView background = new ImageView(backgroundImg);
 		// ความยาวความกว้างแมพ
 		background.setFitHeight(14 * BLOCK_SIZE);
 		background.setFitWidth(70 * BLOCK_SIZE);
@@ -57,13 +57,14 @@ public class GameMain extends Application {
 				gameRoot.setLayoutX(-(offset - 640));
 				background.setLayoutX(-(offset - 640));
 			}
-			if (player.isDead == true) {
+			/*if (player.isDead == true) {
 				player.setTranslateX(0);
 				player.setTranslateY(400);
 				gameRoot.setLayoutX(0);
 				background.setLayoutX(0);
 				player.isDead = false;
-			}
+				clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
+			}*/
 		});
 		
 		canvas = new Canvas(3392,620);
@@ -98,6 +99,14 @@ public class GameMain extends Application {
 		gc.fillRect(0, 0, 3392, 620);
 		//gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200, 200);
 		clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
+		if (player.isDead == true) {
+			player.setTranslateX(0);
+			player.setTranslateY(400);
+			gameRoot.setLayoutX(0);
+			background.setLayoutX(0);
+			player.isDead = false;
+			clearCircle(player.getTranslateX()+player.getWidth(), player.getTranslateY()+player.getHeight(), 200, gc);
+		}
 	}
 
 	private boolean isPressed(KeyCode key) {

@@ -66,6 +66,11 @@ public class Tom extends Entity {
 	public void jumpY(int value) {
 		boolean movingDown = value > 0;
 		for (int i = 0; i < Math.abs(value); i++) {
+			for (Trap killer : GameMain.killers) {
+				if (getBoundsInParent().intersects(killer.getBoundsInParent())) {
+					isDead = true;
+				}
+			}
 			for (Block platform : GameMain.platforms) {
 				if (getBoundsInParent().intersects(platform.getBoundsInParent())) {
 					if (movingDown) {
