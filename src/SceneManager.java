@@ -31,7 +31,7 @@ public final class SceneManager {
 	}
 	
 	public static void gotoSceneOf(Pane pane) {
-		scene = new Scene(pane);
+		scene = new Scene(pane,1280,620);
 		primaryStage.setScene(scene);
 		
 		pane.requestFocus();
