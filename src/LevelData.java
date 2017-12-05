@@ -8,8 +8,16 @@ public class LevelData {
 	public LevelData() {
 	}
 
-	public void setBlock(String[] LEVEL) {
-		level = new String[][] { LEVEL };
+	public void setBlock(int stage) {
+		
+		if (stage == 1) {
+			level = new String[][] { LevelMap.LEVEL1 };
+		} else if (stage == 2) {
+			level = new String[][] { LevelMap.LEVEL2 };
+		} else {
+			level = new String[][] { LevelMap.LEVEL3 };
+		}
+		
 		levelWidth = level[levelNumber][0].length() * BLOCK_SIZE;
 		for (int i = 0; i < level[levelNumber].length; i++) {
 			String line = level[levelNumber][i];

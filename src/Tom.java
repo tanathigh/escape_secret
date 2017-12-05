@@ -23,7 +23,7 @@ public class Tom extends Entity {
 		this.height = 65;
 	}
 
-	public void walk() {
+	public void run() {
 		imageView.setFitHeight(65);
 		imageView.setFitWidth(65);
 		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
@@ -98,7 +98,7 @@ public class Tom extends Entity {
 	public void jumpPlayer() {
 		if (canJump) {
 			// ความสูงการกระโดด
-			playerVelocity = playerVelocity.add(0, -25);
+			playerVelocity = playerVelocity.add(0, -28);
 			canJump = false;
 		}
 	}

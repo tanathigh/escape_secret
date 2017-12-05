@@ -11,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,6 +19,7 @@ public class GameMain extends Application {
 	public static ArrayList<Trap> killers = new ArrayList<>();
 	public static ArrayList<Monster> monsters = new ArrayList<>();
 	private HashMap<KeyCode, Boolean> keys = new HashMap<>();
+	private int stage = 1;
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG.jpg"));
 	ImageView background = new ImageView(backgroundImg);
@@ -29,8 +29,6 @@ public class GameMain extends Application {
 	public static final int CHAR_SIZE_X = 65;
 	public static final int CHAR_SIZE_Y = 65;
 
-	private int state;
-	private int monsterState = 1;
 	public static final int IDLE = 0;
 	public static final int CLIMB = 1;
 
@@ -44,26 +42,24 @@ public class GameMain extends Application {
 	GraphicsContext gc;
 
 	private void initContent(String[] level) {
-		// ความยาวความกว้างแมพ
 		background.setFitHeight(14 * BLOCK_SIZE);
 		background.setFitWidth(70 * BLOCK_SIZE);
-		levelData.setBlock(level);
-		player.walk();
+		levelData.setBlock(stage);
+		player.run();
 		player.setTranslateX(0);
 		player.setTranslateY(400);
 		player.translateXProperty().addListener((obs, old, newValue) -> {
 			int offset = newValue.intValue();
-			// background กับ root เดินตาม
 			if (offset > 640 && offset < levelData.levelWidth - 640) {
 				gameRoot.setLayoutX(-(offset - 640));
 				background.setLayoutX(-(offset - 640));
 			}
 		});
-		// *****************************************************
+		// ************** Create the AI here. ****************
 		minotaur = new Minotaur();
-		minotaur.walk();
-		minotaur.setTranslateX(300);
-		minotaur.setTranslateY(450);
+		minotaur.run();
+		minotaur.setTranslateX(1500);
+		minotaur.setTranslateY(480);
 		// *****************************************************
 		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
@@ -79,16 +75,9 @@ public class GameMain extends Application {
 	}
 
 	private void update() {
-		
 		minotaur.animation.play();
-		if (minotaur.isStructed) {
-			minotaur.setScaleX(1);
-			minotaur.walkX(-2 * monsterState);
-		} else {
-			minotaur.setScaleX(-1);
-			minotaur.walkX(2 * monsterState);
-		}
-		
+		minotaur.walkX(1 * minotaur.getDirection());
+
 		if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
 			player.jumpPlayer();
 		}
@@ -141,7 +130,7 @@ public class GameMain extends Application {
 			keys.put(event.getCode(), false);
 			player.animation.stop();
 		});
-		primaryStage.setTitle("Escape");
+		primaryStage.setTitle("ESCAPE");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		AnimationTimer timer = new AnimationTimer() {

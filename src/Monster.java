@@ -8,9 +8,8 @@ import javafx.util.Duration;
 public abstract class Monster extends Entity {
 
 	public Point2D playerVelocity = new Point2D(0, 0);
-	boolean isStructed = false;
+	private int direction = 1;
 	ImageView imageView;
-	// จำนวนเฟรม
 
 	public Monster(int count, int columns, int offsetX, int offsetY, int width, int height) {
 		this.count = count;
@@ -21,7 +20,7 @@ public abstract class Monster extends Entity {
 		this.height = height;
 	}
 
-	public void walk() {
+	public void run() {
 		imageView.setFitHeight(height);
 		imageView.setFitWidth(width);
 		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
@@ -37,22 +36,35 @@ public abstract class Monster extends Entity {
 			if (getBoundsInParent().intersects(GameMain.player.getBoundsInParent()))
 				GameMain.player.isDead = true;
 			for (Node platform : GameMain.platforms) {
-				// ถ้ากรอบมัน intersect กัน
 				if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
 					if (movingRight) {
-						if (this.getTranslateX() + GameMain.CHAR_SIZE_X == platform.getTranslateX()) {
-							// ไม่ให้เดินทะลุ
-							this.isStructed = true;
+						if (this.getTranslateX() + this.width == platform.getTranslateX()) {
+							this.setTranslateX(this.getTranslateX() - 1);
+							this.setScaleX(-1);
+							direction *= -1;
+							return;
 						}
 					} else {
 						if (this.getTranslateX() == platform.getTranslateX() + GameMain.BLOCK_SIZE) {
-							// ไม่ให้เดินทะลุ
-							this.isStructed = true;
+							this.setTranslateX(this.getTranslateX() + 1);
+							this.setScaleX(1);
+							direction *= -1;
+							return;
 						}
 					}
 				}
 			}
 			this.setTranslateX(this.getTranslateX() + (movingRight ? 1 : -1));
 		}
+
 	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
 }
