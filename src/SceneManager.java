@@ -28,4 +28,11 @@ public final class SceneManager {
 		
 		canvas.requestFocus();
 	}
+	
+	public static void gotoSceneOf(Pane pane) {
+		Scene scene = new Scene(pane);
+		primaryStage.setScene(scene);
+		
+		pane.requestFocus();
+	}
 }
