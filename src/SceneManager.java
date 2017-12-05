@@ -24,14 +24,14 @@ public final class SceneManager {
 	}
 
 	public static void gotoSceneOf(Canvas canvas) {
-		scene = new Scene(new Pane(canvas));
+		scene = new Scene(new Pane(canvas),1280,620);
 		primaryStage.setScene(scene);
 		
 		canvas.requestFocus();
 	}
 	
 	public static void gotoSceneOf(Pane pane) {
-		scene = new Scene(pane);
+		scene = new Scene(pane,1280,620);
 		primaryStage.setScene(scene);
 		
 		pane.requestFocus();
