@@ -8,7 +8,7 @@ public class Block extends Pane {
 	Image blocksImg = new Image(getClass().getResourceAsStream("ob1.png"));
 	ImageView block;
 	public enum BlockType {
-		FLOOR1, FLOOR2, BONUS, PIPE_TOP, PIPE_BOTTOM, INVISIBLE_BLOCK, STONE;
+		FLOOR_DOWN, FLOOR_UP, BONUS, PIPE_TOP, PIPE_BOTTOM, INVISIBLE_BLOCK, STONE;
 	}
 
 	public Block(BlockType blockType, int x, int y) {
@@ -19,11 +19,11 @@ public class Block extends Pane {
 		setTranslateY(y);
 
 		switch (blockType) {
-		case FLOOR1:
+		case FLOOR_DOWN:
 			block.setViewport(new Rectangle2D(0, 0, 30, 16));
 			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
-		case FLOOR2:
+		case FLOOR_UP:
 			block.setViewport(new Rectangle2D(34, 0, 27, 16));
 			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
