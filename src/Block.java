@@ -1,47 +1,57 @@
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Block extends Pane {
-	Image blocksImg = new Image(getClass().getResourceAsStream("ob1.png"));
-	ImageView block;
+	ImageView block = new ImageView(new Image(getClass().getResourceAsStream("obAll.png")));
+
 	public enum BlockType {
-		FLOOR_DOWN, FLOOR_UP, BONUS, PIPE_TOP, PIPE_BOTTOM, INVISIBLE_BLOCK, STONE;
+		FLOOR_DOWN, FLOOR_UP, BRICK, DOOR_UP, DOOR_DOWN, STONE, BOX, INVISIBLE_BLOCK;
 	}
 
 	public Block(BlockType blockType, int x, int y) {
-		block = new ImageView(blocksImg);
+
 		block.setFitWidth(GameMain.BLOCK_SIZE);
 		block.setFitHeight(GameMain.BLOCK_SIZE);
 		setTranslateX(x);
 		setTranslateY(y);
 
 		switch (blockType) {
+		// 1
 		case FLOOR_DOWN:
-			block.setViewport(new Rectangle2D(0, 0, 30, 16));
+			block.setViewport(new Rectangle2D(0, 0, 30, 15));
 			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
+		// 2
 		case FLOOR_UP:
-			block.setViewport(new Rectangle2D(34, 0, 27, 16));
+			block.setViewport(new Rectangle2D(0, 16, 30, 15));
 			block.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
-		case BONUS:
-			block.setViewport(new Rectangle2D(65, 0, 16, 16));
+		// 3
+		case BRICK:
+			block.setViewport(new Rectangle2D(32, 0, 15, 15));
 			break;
-		case PIPE_TOP:
-			block.setViewport(new Rectangle2D(65, 0, 16, 16));
+		// 4
+		case DOOR_UP:
+			block.setViewport(new Rectangle2D(64, 0, 15, 15));
 			break;
-		case PIPE_BOTTOM:
-			block.setViewport(new Rectangle2D(65, 0, 16, 16));
+		// 5
+		case DOOR_DOWN:
+			block.setViewport(new Rectangle2D(64, 16, 15, 15));
 			break;
+		// 6
+		case STONE:
+			block.setViewport(new Rectangle2D(48, 0, 15, 15));
+			break;
+		// 7
+		case BOX:
+			block.setViewport(new Rectangle2D(48, 16, 15, 15));
+			break;
+		// *
 		case INVISIBLE_BLOCK:
 			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			block.setOpacity(0);
-			break;
-		case STONE:
-			block.setViewport(new Rectangle2D(65, 0, 16, 16));
 			break;
 		}
 		getChildren().add(block);

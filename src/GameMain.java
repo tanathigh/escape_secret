@@ -1,8 +1,6 @@
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
-import javafx.animation.SequentialTransition;
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -10,14 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameMain extends Application {
 	public static ArrayList<Block> platforms = new ArrayList<>();
 	public static ArrayList<Trap> killers = new ArrayList<>();
-	public static ArrayList<Monster> monsters = new ArrayList<>();
+	public static ArrayList<Switch> switchs = new ArrayList<>();
 	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 	private int stage = 1;
 
@@ -36,7 +33,7 @@ public class GameMain extends Application {
 	public static Pane gameRoot = new Pane();
 
 	public static Tom player = new Tom();
-	public Minotaur minotaur = new Minotaur();
+	public Minotaur minotaur1, minotaur2;
 
 	Canvas canvas;
 	GraphicsContext gc;
@@ -56,10 +53,17 @@ public class GameMain extends Application {
 			}
 		});
 		// ************** Create the AI here. ****************
-		minotaur = new Minotaur();
-		minotaur.run();
-		minotaur.setTranslateX(1500);
-		minotaur.setTranslateY(480);
+		if (stage == 1) {
+			minotaur1 = new Minotaur();
+			minotaur1.run();
+			minotaur1.setTranslateX(1500);
+			minotaur1.setTranslateY(483);
+
+			minotaur2 = new Minotaur();
+			minotaur2.run();
+			minotaur2.setTranslateX(900);
+			minotaur2.setTranslateY(483);
+		}
 		// *****************************************************
 		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
@@ -68,33 +72,77 @@ public class GameMain extends Application {
 		 * player.getTranslateY()-100, 200, // 200); clearCircle(player.getTranslateX(),
 		 * player.getTranslateY(), 200, gc);
 		 */
-		gameRoot.getChildren().add(minotaur);
+		gameRoot.getChildren().addAll(minotaur1, minotaur2);
 		gameRoot.getChildren().add(player);
 		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
 	}
 
 	private void update() {
-		minotaur.animation.play();
-		minotaur.walkX(1 * minotaur.getDirection());
+		Thread t1 = new Thread(new Runnable() {
+			public void run() {
+				if (stage == 1) {
+					Platform.runLater(new Runnable() {
+						public void run() {
+							minotaur1.animation.play();
+							minotaur1.walkX(1 * minotaur1.getDirection());
+							minotaur2.animation.play();
+							minotaur2.walkX(1 * minotaur2.getDirection());
 
-		if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
-			player.jumpPlayer();
-		}
-		if (isPressed(KeyCode.LEFT) && player.getTranslateX() >= 5) {
-			player.setScaleX(-1);
-			player.animation.play();
-			player.walkX(-5);
-		}
-		if (isPressed(KeyCode.RIGHT) && player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
-			player.setScaleX(1);
-			player.animation.play();
-			player.walkX(5);
-		}
-		if (player.playerVelocity.getY() < 10) {
-			player.playerVelocity = player.playerVelocity.add(0, 1);
-		}
-		player.jumpY((int) player.playerVelocity.getY());
+						}
+					});
+				}
+			}
+		});
+		t1.start();
+
+		Thread t2 = new Thread(new Runnable() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					public void run() {
+						if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
+							player.jumpPlayer();
+						}
+						if (isPressed(KeyCode.LEFT) && player.getTranslateX() >= 5) {
+							player.setScaleX(-1);
+							player.animation.play();
+							player.walkX(-5);
+						}
+						if (isPressed(KeyCode.RIGHT) && player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
+							player.setScaleX(1);
+							player.animation.play();
+							player.walkX(5);
+						}
+						if (player.playerVelocity.getY() < 10) {
+							player.playerVelocity = player.playerVelocity.add(0, 1);
+						}
+						player.jumpY((int) player.playerVelocity.getY());
+						
+						if (player.isDead == true) {
+							player.setTranslateX(0);
+							player.setTranslateY(400);
+							gameRoot.setLayoutX(0);
+							background.setLayoutX(0);
+							player.isDead = false;
+						}
+					}
+				});
+
+			}
+		});
+		t2.start();
+
+		/*
+		 * if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
+		 * player.jumpPlayer(); } if (isPressed(KeyCode.LEFT) && player.getTranslateX()
+		 * >= 5) { player.setScaleX(-1); player.animation.play(); player.walkX(-5); } if
+		 * (isPressed(KeyCode.RIGHT) && player.getTranslateX() + 40 <=
+		 * levelData.levelWidth - 5) { player.setScaleX(1); player.animation.play();
+		 * player.walkX(5); } if (player.playerVelocity.getY() < 10) {
+		 * player.playerVelocity = player.playerVelocity.add(0, 1); } player.jumpY((int)
+		 * player.playerVelocity.getY());
+		 */
+
 		/*
 		 * gc.clearRect(0, 0, 3392, 620); gc.fillRect(0, 0, 3392, 620);
 		 */
@@ -103,17 +151,16 @@ public class GameMain extends Application {
 		// clearCircle(player.getTranslateX() + player.getWidth(),
 		// player.getTranslateY() + player.getHeight(), 200, gc);
 
-		if (player.isDead == true) {
-			player.setTranslateX(0);
-			player.setTranslateY(400);
-			gameRoot.setLayoutX(0);
-			background.setLayoutX(0);
-			player.isDead = false;
-			/*
-			 * clearCircle(player.getTranslateX() + player.getWidth(),
-			 * player.getTranslateY() + player.getHeight(), 200, gc);
-			 */
-		}
+		/*
+		 * if (player.isDead == true) { player.setTranslateX(0);
+		 * player.setTranslateY(400); gameRoot.setLayoutX(0); background.setLayoutX(0);
+		 * player.isDead = false; }
+		 */
+
+		/*
+		 * clearCircle(player.getTranslateX() + player.getWidth(),
+		 * player.getTranslateY() + player.getHeight(), 200, gc);
+		 */
 	}
 
 	private boolean isPressed(KeyCode key) {
@@ -124,17 +171,16 @@ public class GameMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		String[] level = LevelMap.LEVEL1;
 		initContent(level);
-		/*Scene scene = new Scene(appRoot, 1280, 620);
-		scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
-		scene.setOnKeyReleased(event -> {
-			keys.put(event.getCode(), false);
-			player.animation.stop();
-		});*/
+		/*
+		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->
+		 * keys.put(event.getCode(), true)); scene.setOnKeyReleased(event -> {
+		 * keys.put(event.getCode(), false); player.animation.stop(); });
+		 */
 		SceneManager.initialize(primaryStage);
 		SceneManager.gotoMainMenu();
 		primaryStage.setTitle("ESCAPE");
-		//primaryStage.setScene(scene);
-		//primaryStage.show();
+		// primaryStage.setScene(scene);
+		// primaryStage.show();
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {

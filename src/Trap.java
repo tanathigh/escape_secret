@@ -14,7 +14,8 @@ public class Trap extends Pane {
 		trap.setFitHeight(GameMain.BLOCK_SIZE);
 		setTranslateX(x);
 		setTranslateY(y);
-		trap.setViewport(new Rectangle2D(0, 0, 16, 16));
+		trap.setViewport(new Rectangle2D(0, 0, 15, 14));
+		
 		getChildren().add(trap);
 		GameMain.killers.add(this);
 		GameMain.gameRoot.getChildren().add(this);

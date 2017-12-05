@@ -3,16 +3,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Tom extends Entity {
 	public Point2D playerVelocity = new Point2D(0, 0);
 	public boolean isDead = false;
 	protected boolean canJump = true;
-	Image CharacterImg = new Image(getClass().getResourceAsStream("tom.png"));
-	ImageView imageView = new ImageView(CharacterImg);
-	// จำนวนเฟรม
+	ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("tom.png")));
 
 	public Tom() {
 		this.count = 4;
@@ -29,7 +26,7 @@ public class Tom extends Entity {
 		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
 		animation = new Animation(this.imageView, Duration.millis(800), count, columns, offsetX, offsetY, width,
 				height);
-		getChildren().addAll(this.imageView);
+		getChildren().add(this.imageView);
 	}
 
 	@Override
@@ -104,8 +101,7 @@ public class Tom extends Entity {
 	}
 
 	public void dead() {
-		animation = new Animation(this.imageView, Duration.millis(800), 6, 6, 260, 0, width, height);
-		getChildren().addAll(this.imageView);
+		animation = new Animation(imageView, Duration.millis(800), 6, 6, 260, 0, 65, 65);
 	}
 
 }

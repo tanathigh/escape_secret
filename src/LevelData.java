@@ -35,17 +35,27 @@ public class LevelData {
 					Block floor_up = new Block(Block.BlockType.FLOOR_UP, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
 				case '3':
-					Block bonus = new Block(Block.BlockType.BONUS, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					Block brick = new Block(Block.BlockType.BRICK, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
 				case '4':
-					Block stone = new Block(Block.BlockType.STONE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					Block door_up = new Block(Block.BlockType.DOOR_UP, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
 				case '5':
-					Block PipeTopBlock = new Block(Block.BlockType.PIPE_TOP, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					Block door_down = new Block(Block.BlockType.DOOR_DOWN, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-				// ***************************************************************************************************************
 				case '6':
-					Trap floorTrap = new Trap(j * BLOCK_SIZE, i * BLOCK_SIZE);
+					Block stone = new Block(Block.BlockType.STONE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case '7':
+					Block box = new Block(Block.BlockType.BOX, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				// switch
+				case '8':
+					Switch swit = new Switch(Switch.SwitchType.BEFORE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				// Trap
+				case '9':
+					Trap floor_trap = new Trap(j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
 				}
 			}
