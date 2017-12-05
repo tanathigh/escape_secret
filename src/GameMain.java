@@ -18,7 +18,7 @@ public class GameMain extends Application {
 	public static ArrayList<Block> platforms = new ArrayList<>();
 	public static ArrayList<Trap> killers = new ArrayList<>();
 	public static ArrayList<Monster> monsters = new ArrayList<>();
-	private HashMap<KeyCode, Boolean> keys = new HashMap<>();
+	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 	private int stage = 1;
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG.jpg"));
@@ -124,15 +124,17 @@ public class GameMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		String[] level = LevelMap.LEVEL1;
 		initContent(level);
-		Scene scene = new Scene(appRoot, 1280, 620);
+		/*Scene scene = new Scene(appRoot, 1280, 620);
 		scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
 		scene.setOnKeyReleased(event -> {
 			keys.put(event.getCode(), false);
 			player.animation.stop();
-		});
+		});*/
+		SceneManager.initialize(primaryStage);
+		SceneManager.gotoMainMenu();
 		primaryStage.setTitle("ESCAPE");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		//primaryStage.setScene(scene);
+		//primaryStage.show();
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {

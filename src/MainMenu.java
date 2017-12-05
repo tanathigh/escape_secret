@@ -34,7 +34,7 @@ public class MainMenu extends Canvas{
 	private void addKeyEventHandler() {
 		this.setOnKeyPressed(event ->{
 			if (event.getCode() == KeyCode.ENTER) {
-				SceneManager.gotoSceneOf(GameMain.appRoot);
+				newGame();
 			}
 			if (event.getCode() == KeyCode.I) {
 				SceneManager.gotoSceneOf(ins);
@@ -44,5 +44,13 @@ public class MainMenu extends Canvas{
 			}
 		});
 	}
-
+	
+	private static void newGame() {
+		SceneManager.gotoSceneOf(GameMain.appRoot);
+		SceneManager.scene.setOnKeyPressed(event -> GameMain.keys.put(event.getCode(), true));
+		SceneManager.scene.setOnKeyReleased(event -> {
+			GameMain.keys.put(event.getCode(), false);
+			GameMain.player.animation.stop();
+		});
+	}
 }

@@ -9,6 +9,7 @@ public final class SceneManager {
 	private static Stage primaryStage;
 	private static Canvas mainMenuCanvas = new MainMenu();
 	private static Scene mainMenuScene = new Scene(new Pane(mainMenuCanvas));
+	public static Scene scene;
 	public static final int SCENE_WIDTH = 800;
 	public static final int SCENE_HEIGHT = 600;
 
@@ -23,16 +24,18 @@ public final class SceneManager {
 	}
 
 	public static void gotoSceneOf(Canvas canvas) {
-		Scene scene = new Scene(new Pane(canvas));
+		scene = new Scene(new Pane(canvas));
 		primaryStage.setScene(scene);
 		
 		canvas.requestFocus();
 	}
 	
 	public static void gotoSceneOf(Pane pane) {
-		Scene scene = new Scene(pane);
+		scene = new Scene(pane);
 		primaryStage.setScene(scene);
 		
 		pane.requestFocus();
 	}
+	
+
 }
