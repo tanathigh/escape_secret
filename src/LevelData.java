@@ -49,9 +49,13 @@ public class LevelData {
 				case '7':
 					Block box = new Block(Block.BlockType.BOX, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-				// switch
-				case '8':
-					Switch button = new Switch(Switch.SwitchType.BEFORE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+				// exit out
+				case 'o':
+					Exit exit_out = new Exit(Exit.ExitType.EXIT_OUT, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				// exit up
+				case 'u':
+					Exit exit_up = new Exit(Exit.ExitType.EXIT_UP, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
 				// Trap
 				case '9':

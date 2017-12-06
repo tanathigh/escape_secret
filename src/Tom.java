@@ -44,7 +44,7 @@ public class Tom extends Entity {
 				}
 			}
 
-			for (Switch button : GameMain.switchs) {
+			for (Exit button : GameMain.exits) {
 				if (getBoundsInParent().intersects(button.getBoundsInParent())) {
 					GameMain.nextDoorIsOpen = true;
 				}

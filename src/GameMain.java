@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class GameMain extends Application {
 	public static ArrayList<Block> platforms = new ArrayList<>();
 	public static ArrayList<Trap> killers = new ArrayList<>();
-	public static ArrayList<Switch> switchs = new ArrayList<>();
+	public static ArrayList<Exit> exits = new ArrayList<>();
 	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
 	private static int stage = 1;
@@ -96,7 +96,7 @@ public class GameMain extends Application {
 			//**************** clear *******************
 			platforms.clear();
 			killers.clear();
-			switchs.clear();
+			exits.clear();
 			gameRoot.getChildren().clear();
 			appRoot.getChildren().clear();
 			initContent(stage);
