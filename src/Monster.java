@@ -1,14 +1,13 @@
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public abstract class Monster extends Entity {
 
 	public Point2D playerVelocity = new Point2D(0, 0);
-	private int direction = 1;
+	protected int direction = 1;
 	ImageView imageView;
 
 	public Monster(int count, int columns, int offsetX, int offsetY, int width, int height) {

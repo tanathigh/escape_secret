@@ -13,18 +13,18 @@ public class Exit extends Pane {
 
 	public Exit(ExitType exitType, int x, int y) {
 
-		exit.setFitWidth(GameMain.BLOCK_SIZE * 1.5);
-		exit.setFitHeight(GameMain.BLOCK_SIZE * 1.5);
+		exit.setFitWidth(GameMain.BLOCK_SIZE);
+		exit.setFitHeight(GameMain.BLOCK_SIZE);
 		setTranslateX(x);
 		setTranslateY(y);
 
 		switch (exitType) {
 		case EXIT_UP:
-			exit.setViewport(new Rectangle2D(0, 0, 70, 70));
+			exit.setViewport(new Rectangle2D(0, 0, 28, 28));
 			break;
 
 		case EXIT_OUT:
-			exit.setViewport(new Rectangle2D(70, 0, 70, 70));
+			exit.setViewport(new Rectangle2D(28, 0, 28, 28));
 			break;
 		}
 

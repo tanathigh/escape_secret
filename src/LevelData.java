@@ -61,6 +61,37 @@ public class LevelData {
 				case '9':
 					Trap floor_trap = new Trap(j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
+				// Dec
+				case 'q':
+					Decoration ent = new Decoration(Decoration.DecType.ENTRANCE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case 'w':
+					Decoration fake_exit = new Decoration(Decoration.DecType.FAKE_EXIT, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case 'e':
+					Decoration ice1 = new Decoration(Decoration.DecType.ICE1, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case 'a':
+					Decoration ice = new Decoration(Decoration.DecType.ICE2, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case 's':
+					Decoration mushroom = new Decoration(Decoration.DecType.MUSHROOM, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case 'd':
+					Decoration mushroom_long = new Decoration(Decoration.DecType.MUSHROOM_LONG, j * BLOCK_SIZE,
+							i * BLOCK_SIZE);
+					break;
+				case 'z':
+					Decoration skull = new Decoration(Decoration.DecType.SKULL, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+				case 'x':
+					Decoration skull_long = new Decoration(Decoration.DecType.SKULL_LONG, j * BLOCK_SIZE,
+							i * BLOCK_SIZE);
+					break;
+				case 'c':
+					Decoration stone_dec = new Decoration(Decoration.DecType.STONE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					break;
+
 				}
 			}
 
