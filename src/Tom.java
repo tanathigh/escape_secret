@@ -24,7 +24,7 @@ public class Tom extends Entity {
 		imageView.setFitHeight(65);
 		imageView.setFitWidth(65);
 		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
-		animation = new Animation(this.imageView, Duration.millis(800), count, columns, offsetX, offsetY, width,
+		animation = new Animation(imageView, Duration.millis(800), count, columns, offsetX, offsetY, width,
 				height);
 		if (getChildren().contains(imageView)) {
 			getChildren().clear();
@@ -110,10 +110,6 @@ public class Tom extends Entity {
 			playerVelocity = playerVelocity.add(0, -28);
 			canJump = false;
 		}
-	}
-
-	public void dead() {
-		animation = new Animation(imageView, Duration.millis(800), 6, 6, 260, 0, 65, 65);
 	}
 
 }

@@ -49,6 +49,8 @@ public class GameMain extends Application {
 		player.run();
 		player.setTranslateX(100);
 		player.setTranslateY(400);
+		gameRoot.setLayoutX(0);
+		background.setLayoutX(0);
 
 		player.translateXProperty().addListener((obs, old, newValue) -> {
 			int offset = newValue.intValue();
