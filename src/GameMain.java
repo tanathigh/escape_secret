@@ -16,7 +16,9 @@ public class GameMain extends Application {
 	public static ArrayList<Trap> killers = new ArrayList<>();
 	public static ArrayList<Switch> switchs = new ArrayList<>();
 	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
-	private int stage = 1;
+
+	private static int stage = 1;
+	public static boolean nextDoorIsOpen = false;
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG.jpg"));
 	ImageView background = new ImageView(backgroundImg);
@@ -32,19 +34,22 @@ public class GameMain extends Application {
 	public static Pane appRoot = new Pane();
 	public static Pane gameRoot = new Pane();
 
-	public static Tom player = new Tom();
+	public static Tom player;
 	public Minotaur minotaur1, minotaur2;
 
 	Canvas canvas;
 	GraphicsContext gc;
 
-	private void initContent(String[] level) {
+	private void initContent(int stage) {
+
 		background.setFitHeight(14 * BLOCK_SIZE);
 		background.setFitWidth(70 * BLOCK_SIZE);
 		levelData.setBlock(stage);
+		player = new Tom();
 		player.run();
-		player.setTranslateX(0);
+		player.setTranslateX(100);
 		player.setTranslateY(400);
+
 		player.translateXProperty().addListener((obs, old, newValue) -> {
 			int offset = newValue.intValue();
 			if (offset > 640 && offset < levelData.levelWidth - 640) {
@@ -52,19 +57,23 @@ public class GameMain extends Application {
 				background.setLayoutX(-(offset - 640));
 			}
 		});
+
 		// ************** Create the AI here. ****************
-		if (stage == 1) {
+
+		if (stage == 2) {
 			minotaur1 = new Minotaur();
 			minotaur1.run();
 			minotaur1.setTranslateX(1500);
 			minotaur1.setTranslateY(483);
-
 			minotaur2 = new Minotaur();
 			minotaur2.run();
 			minotaur2.setTranslateX(900);
 			minotaur2.setTranslateY(483);
+			gameRoot.getChildren().addAll(minotaur1, minotaur2);
 		}
+
 		// *****************************************************
+
 		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
 		/*
@@ -72,31 +81,42 @@ public class GameMain extends Application {
 		 * player.getTranslateY()-100, 200, // 200); clearCircle(player.getTranslateX(),
 		 * player.getTranslateY(), 200, gc);
 		 */
-		gameRoot.getChildren().addAll(minotaur1, minotaur2);
 		gameRoot.getChildren().add(player);
 		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
 	}
 
 	private void update() {
-		Thread t1 = new Thread(new Runnable() {
-			public void run() {
-				if (stage == 1) {
+
+		if (nextDoorIsOpen == true) {
+			nextDoorIsOpen = false;
+			stage++;
+			//**************** clear *******************
+			platforms.clear();
+			killers.clear();
+			switchs.clear();
+			gameRoot.getChildren().clear();
+			appRoot.getChildren().clear();
+			initContent(stage);
+		}
+
+		if (stage == 2) {
+			Thread bot = new Thread(new Runnable() {
+				public void run() {
 					Platform.runLater(new Runnable() {
 						public void run() {
 							minotaur1.animation.play();
 							minotaur1.walkX(1 * minotaur1.getDirection());
 							minotaur2.animation.play();
 							minotaur2.walkX(1 * minotaur2.getDirection());
-
 						}
 					});
 				}
-			}
-		});
-		t1.start();
+			});
+			bot.start();
+		}
 
-		Thread t2 = new Thread(new Runnable() {
+		Thread mainPlayer = new Thread(new Runnable() {
 			public void run() {
 				Platform.runLater(new Runnable() {
 					public void run() {
@@ -117,7 +137,7 @@ public class GameMain extends Application {
 							player.playerVelocity = player.playerVelocity.add(0, 1);
 						}
 						player.jumpY((int) player.playerVelocity.getY());
-						
+
 						if (player.isDead == true) {
 							player.setTranslateX(0);
 							player.setTranslateY(400);
@@ -130,7 +150,7 @@ public class GameMain extends Application {
 
 			}
 		});
-		t2.start();
+		mainPlayer.start();
 
 		/*
 		 * if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
@@ -169,8 +189,8 @@ public class GameMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		String[] level = LevelMap.LEVEL1;
-		initContent(level);
+		// stage+=1;
+		initContent(stage);
 		/*
 		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->
 		 * keys.put(event.getCode(), true)); scene.setOnKeyReleased(event -> {
@@ -181,12 +201,14 @@ public class GameMain extends Application {
 		primaryStage.setTitle("ESCAPE");
 		// primaryStage.setScene(scene);
 		// primaryStage.show();
+
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
 				update();
 			}
 		};
+
 		timer.start();
 	}
 

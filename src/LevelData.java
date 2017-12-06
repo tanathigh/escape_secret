@@ -51,7 +51,7 @@ public class LevelData {
 					break;
 				// switch
 				case '8':
-					Switch swit = new Switch(Switch.SwitchType.BEFORE, j * BLOCK_SIZE, i * BLOCK_SIZE);
+					Switch button = new Switch(Switch.SwitchType.BEFORE, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
 				// Trap
 				case '9':

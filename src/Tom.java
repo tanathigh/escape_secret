@@ -26,7 +26,12 @@ public class Tom extends Entity {
 		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
 		animation = new Animation(this.imageView, Duration.millis(800), count, columns, offsetX, offsetY, width,
 				height);
-		getChildren().add(this.imageView);
+		if (getChildren().contains(imageView)) {
+			getChildren().clear();
+
+		} else {
+			getChildren().add(imageView);
+		}
 	}
 
 	@Override
@@ -38,6 +43,13 @@ public class Tom extends Entity {
 					isDead = true;
 				}
 			}
+
+			for (Switch button : GameMain.switchs) {
+				if (getBoundsInParent().intersects(button.getBoundsInParent())) {
+					GameMain.nextDoorIsOpen = true;
+				}
+			}
+
 			for (Node platform : GameMain.platforms) {
 				// ถ้ากรอบมัน intersect กัน
 				if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
