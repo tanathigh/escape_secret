@@ -11,12 +11,10 @@ public class Decoration extends Pane {
 	}
 
 	public Decoration(DecType decType, int x, int y) {
-
 		dec.setFitWidth(GameMain.BLOCK_SIZE);
 		dec.setFitHeight(GameMain.BLOCK_SIZE);
 		setTranslateX(x);
 		setTranslateY(y);
-
 		switch (decType) {
 		// 1
 		case ENTRANCE:
@@ -48,7 +46,6 @@ public class Decoration extends Pane {
 			dec.setViewport(new Rectangle2D(300, 50, 100, 50));
 			dec.setFitWidth(GameMain.BLOCK_SIZE * 2);
 			break;
-
 		}
 		getChildren().add(dec);
 		GameMain.decorations.add(this);

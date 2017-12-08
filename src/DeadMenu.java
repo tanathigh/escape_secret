@@ -8,10 +8,9 @@ import javafx.scene.text.TextAlignment;
 
 public class DeadMenu extends Canvas {
 	private static final Font TITLE_FONT = new Font("Monospace", 80);
-
 	GraphicsContext gc;
 	Instruction ins = new Instruction();
-
+	
 	public DeadMenu() {
 		super(1280,620);
 		gc = this.getGraphicsContext2D();
@@ -21,10 +20,9 @@ public class DeadMenu extends Canvas {
 		gc.setFill(Color.WHITE);
 		gc.setFont(TITLE_FONT);
 		gc.fillText("Remaing = ", 1280 / 2, 620 / 4);
-
 		addKeyEventHandler();
 	}
-
+	
 	private void addKeyEventHandler() {
 		this.setOnKeyPressed(event -> {
 			if (event.getCode() == KeyCode.ENTER) {

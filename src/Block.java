@@ -11,12 +11,10 @@ public class Block extends Pane {
 	}
 
 	public Block(BlockType blockType, int x, int y) {
-
 		block.setFitWidth(GameMain.BLOCK_SIZE);
 		block.setFitHeight(GameMain.BLOCK_SIZE);
 		setTranslateX(x);
 		setTranslateY(y);
-
 		switch (blockType) {
 		// 1
 		case FLOOR_DOWN:

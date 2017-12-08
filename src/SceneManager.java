@@ -1,11 +1,9 @@
-
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public final class SceneManager {
-
 	private static Stage primaryStage;
 	private static Canvas mainMenuCanvas = new MainMenu();
 	private static Scene mainMenuScene = new Scene(new Pane(mainMenuCanvas));
@@ -26,7 +24,6 @@ public final class SceneManager {
 	public static void gotoSceneOf(Canvas canvas) {
 		scene = new Scene(new Pane(canvas), 1280, 620);
 		primaryStage.setScene(scene);
-
 		canvas.requestFocus();
 	}
 
@@ -36,8 +33,5 @@ public final class SceneManager {
 			pane.requestFocus();
 		}
 		primaryStage.setScene(scene);
-		
-
 	}
-
 }

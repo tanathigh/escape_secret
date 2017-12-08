@@ -19,7 +19,6 @@ public class Instruction extends Canvas{
 		gc.fillText("<^v> - Move", 1280 / 2, 620 / 4);
 		gc.fillText("Spacebar - Jump", 1280 / 2, 620 / 2);
 		gc.fillText("Press any key to return to main menu", 1280 / 2, 620 * 4 / 5);
-		
 		addKeyEventHandler();
 	}
 	
@@ -28,5 +27,4 @@ public class Instruction extends Canvas{
 			SceneManager.gotoMainMenu();
 		});
 	}
-
 }

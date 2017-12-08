@@ -1,5 +1,4 @@
 public class LevelData {
-
 	public static String[][] level;
 	public static final int BLOCK_SIZE = 45;
 	int levelNumber = 0;
@@ -7,9 +6,7 @@ public class LevelData {
 
 	public LevelData() {
 	}
-
 	public void setBlock(int stage) {
-
 		if (stage == 1) {
 			level = new String[][] { LevelMap.LEVEL1 };
 		} else if (stage == 2) {
@@ -17,12 +14,12 @@ public class LevelData {
 		} else {
 			level = new String[][] { LevelMap.LEVEL3 };
 		}
-
 		levelWidth = level[levelNumber][0].length() * BLOCK_SIZE;
 		for (int i = 0; i < level[levelNumber].length; i++) {
 			String line = level[levelNumber][i];
 			for (int j = 0; j < line.length(); j++) {
 				switch (line.charAt(j)) {
+				// Block
 				case '*':
 					Block InvisibleBlock = new Block(Block.BlockType.INVISIBLE_BLOCK, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
@@ -49,11 +46,11 @@ public class LevelData {
 				case '7':
 					Block box = new Block(Block.BlockType.BOX, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-				// exit out
+				// Exit out
 				case 'o':
 					Exit exit_out = new Exit(Exit.ExitType.EXIT_OUT, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-				// exit up
+				// Exit up
 				case 'u':
 					Exit exit_up = new Exit(Exit.ExitType.EXIT_UP, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
@@ -61,7 +58,7 @@ public class LevelData {
 				case '9':
 					Trap floor_trap = new Trap(j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-				// Dec
+				// Decoration
 				case 'q':
 					Decoration ent = new Decoration(Decoration.DecType.ENTRANCE, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
@@ -91,10 +88,8 @@ public class LevelData {
 				case 'c':
 					Decoration stone_dec = new Decoration(Decoration.DecType.STONE, j * BLOCK_SIZE, i * BLOCK_SIZE);
 					break;
-
 				}
 			}
-
 		}
 	}
 }

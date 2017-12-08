@@ -55,7 +55,6 @@ public abstract class Monster extends Entity {
 			}
 			this.setTranslateX(this.getTranslateX() + (movingRight ? 1 : -1));
 		}
-
 	}
 
 	public int getDirection() {
@@ -65,5 +64,4 @@ public abstract class Monster extends Entity {
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
-
 }

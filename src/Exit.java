@@ -4,7 +4,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Exit extends Pane {
-
 	ImageView exit = new ImageView(new Image(getClass().getResourceAsStream("exit.jpg")));
 
 	public enum ExitType {
@@ -12,7 +11,6 @@ public class Exit extends Pane {
 	}
 
 	public Exit(ExitType exitType, int x, int y) {
-
 		exit.setFitWidth(GameMain.BLOCK_SIZE);
 		exit.setFitHeight(GameMain.BLOCK_SIZE);
 		setTranslateX(x);

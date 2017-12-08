@@ -5,7 +5,6 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class Animation extends Transition {
-
 	private final ImageView imageView;
 	private final int count;
 	private final int columns;
@@ -16,7 +15,6 @@ public class Animation extends Transition {
 
 	public Animation(ImageView imageView, Duration duration, int count, int columns, int offsetX, int offsetY,
 			int width, int height) {
-
 		this.imageView = imageView;
 		this.count = count;
 		this.columns = columns;
@@ -24,12 +22,10 @@ public class Animation extends Transition {
 		this.offsetY = offsetY;
 		this.width = width;
 		this.height = height;
-
 		setCycleDuration(duration);
 		setCycleCount(Animation.INDEFINITE);
 		setInterpolator(Interpolator.LINEAR);
 		this.imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
-
 	}
 
 	public void setOffsetX(int x) {

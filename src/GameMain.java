@@ -19,8 +19,9 @@ public class GameMain extends Application {
 	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
 	public static int countLife = 3;
-
 	private static int stage = 1;
+	private long delayTime = 0;
+	private long currentTime = 0;
 	public static boolean nextDoorIsOpen = false;
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG1.jpg"));
@@ -37,7 +38,6 @@ public class GameMain extends Application {
 	public static Pane appRoot = new Pane();
 	public static Pane gameRoot = new Pane();
 
-	// Character
 	public static Tom player;
 	public Minotaur minotaur1, minotaur2;
 	public Insect insect1, insect2, insect3, insect4;
@@ -48,7 +48,6 @@ public class GameMain extends Application {
 	DeadText dead;
 
 	private void initContent(int stage) {
-
 		background.setFitHeight(14 * BLOCK_SIZE);
 		background.setFitWidth(70 * BLOCK_SIZE);
 		levelData.setBlock(stage);
@@ -58,7 +57,6 @@ public class GameMain extends Application {
 		player.setTranslateY(450);
 		gameRoot.setLayoutX(0);
 		background.setLayoutX(0);
-
 		player.translateXProperty().addListener((obs, old, newValue) -> {
 			int offset = newValue.intValue();
 			if (offset > 640 && offset < levelData.levelWidth - 640) {
@@ -66,9 +64,7 @@ public class GameMain extends Application {
 				background.setLayoutX(-(offset - 640));
 			}
 		});
-
 		// ************** Create the AI here. ****************
-
 		if (stage == 2) {
 			minotaur1 = new Minotaur();
 			minotaur1.run();
@@ -88,7 +84,6 @@ public class GameMain extends Application {
 			tree1.setTranslateY(225);
 			gameRoot.getChildren().addAll(minotaur1, minotaur2, insect2, tree1);
 		}
-
 		if (stage == 3) {
 			insect1 = new Insect();
 			insect1.run();
@@ -112,9 +107,7 @@ public class GameMain extends Application {
 			tree1.setTranslateY(539);
 			gameRoot.getChildren().addAll(insect1, insect2, insect3, insect4, tree1);
 		}
-
 		// *****************************************************
-
 		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
 		/*
@@ -128,8 +121,11 @@ public class GameMain extends Application {
 	}
 
 	private void update() {
-
-		if (countLife == 0) {
+		currentTime = System.currentTimeMillis();
+		// delayTime = System.currentTimeMillis() + 2000;
+		if (countLife == 0 || stage > 3) {
+			stage = 1;
+			countLife = 3;
 			platforms.clear();
 			killers.clear();
 			exits.clear();
@@ -139,12 +135,10 @@ public class GameMain extends Application {
 			initContent(stage);
 			SceneManager.gotoMainMenu();
 		}
-
-		if (countLife > 0) {
+		if (countLife > 0 && currentTime > delayTime) {
 			if (nextDoorIsOpen == true) {
 				nextDoorIsOpen = false;
 				stage++;
-				// **************** clear *******************
 				platforms.clear();
 				killers.clear();
 				exits.clear();
@@ -152,7 +146,6 @@ public class GameMain extends Application {
 				appRoot.getChildren().clear();
 				initContent(stage);
 			}
-
 			if (stage == 2) {
 				Thread bot = new Thread(new Runnable() {
 					public void run() {
@@ -172,10 +165,8 @@ public class GameMain extends Application {
 				});
 				bot.start();
 			}
-
 			if (stage == 3) {
 				Thread bot = new Thread(new Runnable() {
-
 					public void run() {
 						Platform.runLater(new Runnable() {
 							public void run() {
@@ -195,7 +186,6 @@ public class GameMain extends Application {
 				});
 				bot.start();
 			}
-
 			Thread mainPlayer = new Thread(new Runnable() {
 				public void run() {
 					Platform.runLater(new Runnable() {
@@ -219,15 +209,15 @@ public class GameMain extends Application {
 							player.jumpY((int) player.playerVelocity.getY());
 
 							if (player.isDead == true) {
+								player.isDead = false;
 								countLife--;
 								dead = new DeadText();
 								gameRoot.getChildren().add(dead);
 								dead.requestFocus();
-								player.setTranslateX(0);
-								player.setTranslateY(400);
+								player.setTranslateX(100);
+								player.setTranslateY(450);
 								gameRoot.setLayoutX(0);
 								background.setLayoutX(0);
-								player.isDead = false;
 							}
 						}
 					});
@@ -273,7 +263,6 @@ public class GameMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		stage = 2;
 		initContent(stage);
 		/*
 		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->
@@ -285,14 +274,12 @@ public class GameMain extends Application {
 		primaryStage.setTitle("ESCAPE");
 		// primaryStage.setScene(scene);
 		// primaryStage.show();
-
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
 				update();
 			}
 		};
-
 		timer.start();
 	}
 
@@ -303,9 +290,7 @@ public class GameMain extends Application {
 			double w = r * 2 * Math.cos(rad);
 			double h = r * 2 * Math.sin(rad);
 			gc.clearRect(dx, dy, w, h);
-
 		}
-
 	}
 
 	public static void main(String[] args) {
