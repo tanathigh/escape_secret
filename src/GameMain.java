@@ -18,7 +18,7 @@ public class GameMain extends Application {
 	public static ArrayList<Decoration> decorations = new ArrayList<>();
 	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
-	public static int countLife;
+	public static int countLife = 3;
 
 	private static int stage = 1;
 	public static boolean nextDoorIsOpen = false;
@@ -129,7 +129,6 @@ public class GameMain extends Application {
 	private void update() {
 
 		if (countLife == 0) {
-			stage = 1;
 			platforms.clear();
 			killers.clear();
 			exits.clear();
@@ -139,98 +138,99 @@ public class GameMain extends Application {
 			SceneManager.gotoMainMenu();
 		}
 
-		if (nextDoorIsOpen == true) {
-			nextDoorIsOpen = false;
-			stage++;
-			// **************** clear *******************
-			platforms.clear();
-			killers.clear();
-			exits.clear();
-			gameRoot.getChildren().clear();
-			appRoot.getChildren().clear();
-			initContent(stage);
-		}
+		if (countLife > 0) {
+			if (nextDoorIsOpen == true) {
+				nextDoorIsOpen = false;
+				stage++;
+				// **************** clear *******************
+				platforms.clear();
+				killers.clear();
+				exits.clear();
+				gameRoot.getChildren().clear();
+				appRoot.getChildren().clear();
+				initContent(stage);
+			}
 
-		if (stage == 2) {
-			Thread bot = new Thread(new Runnable() {
-				public void run() {
-					Platform.runLater(new Runnable() {
-						public void run() {
-							minotaur1.animation.play();
-							minotaur1.walkX(1 * minotaur1.getDirection());
-							minotaur2.animation.play();
-							minotaur2.walkX(1 * minotaur2.getDirection());
-							insect2.animation.play();
-							insect2.walkX(3 * insect2.getDirection());
-							tree1.animation.play();
-							tree1.walkX(2 * tree1.getDirection());
-						}
-					});
-				}
-			});
-			bot.start();
-		}
-
-		if (stage == 3) {
-			Thread bot = new Thread(new Runnable() {
-
-				public void run() {
-					Platform.runLater(new Runnable() {
-						public void run() {
-							insect1.animation.play();
-							insect1.walkX(3 * insect1.getDirection());
-							insect2.animation.play();
-							insect2.walkX(3 * insect2.getDirection());
-							insect3.animation.play();
-							insect3.walkX(3 * insect3.getDirection());
-							insect4.animation.play();
-							insect4.walkX(3 * insect4.getDirection());
-							tree1.animation.play();
-							tree1.walkX(2 * tree1.getDirection());
-						}
-					});
-				}
-			});
-			bot.start();
-		}
-
-		Thread mainPlayer = new Thread(new Runnable() {
-			public void run() {
-				Platform.runLater(new Runnable() {
+			if (stage == 2) {
+				Thread bot = new Thread(new Runnable() {
 					public void run() {
-						if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
-							player.jumpPlayer();
-						}
-						if (isPressed(KeyCode.LEFT) && player.getTranslateX() >= 5) {
-							player.setScaleX(-1);
-							player.animation.play();
-							player.walkX(-5);
-						}
-						if (isPressed(KeyCode.RIGHT) && player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
-							player.setScaleX(1);
-							player.animation.play();
-							player.walkX(5);
-						}
-						if (player.playerVelocity.getY() < 10) {
-							player.playerVelocity = player.playerVelocity.add(0, 1);
-						}
-						player.jumpY((int) player.playerVelocity.getY());
-
-						if (player.isDead == true) {
-							countLife--;
-							player.setTranslateX(0);
-							player.setTranslateY(400);
-							gameRoot.setLayoutX(0);
-							background.setLayoutX(0);
-							player.isDead = false;
-						}
+						Platform.runLater(new Runnable() {
+							public void run() {
+								minotaur1.animation.play();
+								minotaur1.walkX(1 * minotaur1.getDirection());
+								minotaur2.animation.play();
+								minotaur2.walkX(1 * minotaur2.getDirection());
+								insect2.animation.play();
+								insect2.walkX(3 * insect2.getDirection());
+								tree1.animation.play();
+								tree1.walkX(2 * tree1.getDirection());
+							}
+						});
 					}
 				});
-
+				bot.start();
 			}
-		});
-		mainPlayer.start();
 
+			if (stage == 3) {
+				Thread bot = new Thread(new Runnable() {
+
+					public void run() {
+						Platform.runLater(new Runnable() {
+							public void run() {
+								insect1.animation.play();
+								insect1.walkX(3 * insect1.getDirection());
+								insect2.animation.play();
+								insect2.walkX(3 * insect2.getDirection());
+								insect3.animation.play();
+								insect3.walkX(3 * insect3.getDirection());
+								insect4.animation.play();
+								insect4.walkX(3 * insect4.getDirection());
+								tree1.animation.play();
+								tree1.walkX(2 * tree1.getDirection());
+							}
+						});
+					}
+				});
+				bot.start();
+			}
+
+			Thread mainPlayer = new Thread(new Runnable() {
+				public void run() {
+					Platform.runLater(new Runnable() {
+						public void run() {
+							if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
+								player.jumpPlayer();
+							}
+							if (isPressed(KeyCode.LEFT) && player.getTranslateX() >= 5) {
+								player.setScaleX(-1);
+								player.animation.play();
+								player.walkX(-5);
+							}
+							if (isPressed(KeyCode.RIGHT) && player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
+								player.setScaleX(1);
+								player.animation.play();
+								player.walkX(5);
+							}
+							if (player.playerVelocity.getY() < 10) {
+								player.playerVelocity = player.playerVelocity.add(0, 1);
+							}
+							player.jumpY((int) player.playerVelocity.getY());
+
+							if (player.isDead == true) {
+								countLife--;
+								player.setTranslateX(0);
+								player.setTranslateY(400);
+								gameRoot.setLayoutX(0);
+								background.setLayoutX(0);
+								player.isDead = false;
+							}
+						}
+					});
+
+				}
+			});
+			mainPlayer.start();
+		}
 		/*
 		 * if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
 		 * player.jumpPlayer(); } if (isPressed(KeyCode.LEFT) && player.getTranslateX()
@@ -268,6 +268,7 @@ public class GameMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		stage = 2;
 		initContent(stage);
 		/*
 		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->

@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 public class MainMenu extends Canvas {
+	private static int i = 0;
 	private static final Font TITLE_FONT = new Font("Monospace", 80);
 	private static final Font MENU_FONT = new Font("Monospace", 40);
 	GraphicsContext gc;
@@ -47,10 +48,13 @@ public class MainMenu extends Canvas {
 
 	private static void newGame() {
 		SceneManager.gotoSceneOf(GameMain.appRoot);
-		SceneManager.scene.setOnKeyPressed(event -> GameMain.keys.put(event.getCode(), true));
-		SceneManager.scene.setOnKeyReleased(event -> {
-			GameMain.keys.put(event.getCode(), false);
-			GameMain.player.animation.stop();
-		});
+		if (i == 0) {
+			SceneManager.scene.setOnKeyPressed(event -> GameMain.keys.put(event.getCode(), true));
+			SceneManager.scene.setOnKeyReleased(event -> {
+				GameMain.keys.put(event.getCode(), false);
+				GameMain.player.animation.stop();
+				i++;
+			});
+		}
 	}
 }
