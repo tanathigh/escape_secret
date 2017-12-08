@@ -6,6 +6,7 @@ public class LevelData {
 
 	public LevelData() {
 	}
+
 	public void setBlock(int stage) {
 		if (stage == 1) {
 			level = new String[][] { LevelMap.LEVEL1 };

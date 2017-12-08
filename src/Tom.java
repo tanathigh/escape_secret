@@ -16,13 +16,13 @@ public class Tom extends Entity {
 		this.columns = 4;
 		this.offsetX = 0;
 		this.offsetY = 0;
-		this.width = 65;
-		this.height = 65;
+		this.width = 38;
+		this.height = 55;
 	}
 
 	public void run() {
-		imageView.setFitHeight(65);
-		imageView.setFitWidth(65);
+		imageView.setFitWidth(38);
+		imageView.setFitHeight(55);
 		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
 		animation = new Animation(imageView, Duration.millis(800), count, columns, offsetX, offsetY, width, height);
 		if (getChildren().contains(imageView)) {

@@ -28,8 +28,8 @@ public class GameMain extends Application {
 	LevelData levelData = new LevelData();
 
 	public static final int BLOCK_SIZE = 45;
-	public static final int CHAR_SIZE_X = 65;
-	public static final int CHAR_SIZE_Y = 65;
+	public static final int CHAR_SIZE_X = 38;
+	public static final int CHAR_SIZE_Y = 55;
 
 	public static final int IDLE = 0;
 	public static final int CLIMB = 1;
