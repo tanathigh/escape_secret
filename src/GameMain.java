@@ -18,6 +18,8 @@ public class GameMain extends Application {
 	public static ArrayList<Decoration> decorations = new ArrayList<>();
 	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
+	public static int countLife;
+
 	private static int stage = 1;
 	public static boolean nextDoorIsOpen = false;
 
@@ -126,6 +128,17 @@ public class GameMain extends Application {
 
 	private void update() {
 
+		if (countLife == 0) {
+			stage = 1;
+			platforms.clear();
+			killers.clear();
+			exits.clear();
+			gameRoot.getChildren().clear();
+			appRoot.getChildren().clear();
+			initContent(stage);
+			SceneManager.gotoMainMenu();
+		}
+
 		if (nextDoorIsOpen == true) {
 			nextDoorIsOpen = false;
 			stage++;
@@ -160,6 +173,7 @@ public class GameMain extends Application {
 
 		if (stage == 3) {
 			Thread bot = new Thread(new Runnable() {
+
 				public void run() {
 					Platform.runLater(new Runnable() {
 						public void run() {
@@ -203,6 +217,7 @@ public class GameMain extends Application {
 						player.jumpY((int) player.playerVelocity.getY());
 
 						if (player.isDead == true) {
+							countLife--;
 							player.setTranslateX(0);
 							player.setTranslateY(400);
 							gameRoot.setLayoutX(0);
