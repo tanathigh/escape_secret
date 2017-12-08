@@ -27,7 +27,7 @@ public class GameMain extends Application {
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG1.jpg"));
 	ImageView background = new ImageView(backgroundImg);
 	LevelData levelData = new LevelData();
-	AudioClip song = new AudioClip(ClassLoader.getSystemResource("DarkCave.mp3").toString());
+	AudioClip song;
 	AudioClip scream = new AudioClip(ClassLoader.getSystemResource("ScreamSound.mp3").toString());
 
 	public static final int BLOCK_SIZE = 45;
@@ -270,6 +270,7 @@ public class GameMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initContent(stage);
+		song = new AudioClip(ClassLoader.getSystemResource("DarkCave.mp3").toString());
 		song.setCycleCount(99);
 		song.play();
 		/*
