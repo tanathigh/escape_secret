@@ -16,10 +16,12 @@ public class DeadText extends Canvas {
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setFill(Color.WHITE);
+		gc.setFill(Color.RED);
 		gc.setFont(TITLE_FONT);
-		gc.fillText("Remaining : " + GameMain.countLife, 1280 / 2, 620 / 2);
+		gc.fillText("You're Dead", 1280 / 2, 620 / 2-100);
+		gc.setFill(Color.WHITE);
 		gc.setFont(TITLE_FONT2);
+		gc.fillText("Remaining : " + GameMain.countLife, 1280 / 2, 620 / 2+100);
 		gc.fillText("( Please press Enter )", 1280 / 2, 620 / 2 + 200);
 		addKeyEventHandler();
 	}
