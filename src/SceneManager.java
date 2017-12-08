@@ -6,7 +6,9 @@ import javafx.stage.Stage;
 public final class SceneManager {
 	private static Stage primaryStage;
 	private static Canvas mainMenuCanvas = new MainMenu();
+	private static Canvas instruction = new Instruction();
 	private static Scene mainMenuScene = new Scene(new Pane(mainMenuCanvas));
+	private static Scene instructionScene = new Scene(new Pane(instruction));
 	public static Scene scene;
 	public static final int SCENE_WIDTH = 800;
 	public static final int SCENE_HEIGHT = 600;
@@ -19,6 +21,11 @@ public final class SceneManager {
 	public static void gotoMainMenu() {
 		primaryStage.setScene(mainMenuScene);
 		mainMenuCanvas.requestFocus();
+	}
+	
+	public static void gotoInstruction() {
+		primaryStage.setScene(instructionScene);
+		instruction.requestFocus();
 	}
 
 	public static void gotoSceneOf(Canvas canvas) {

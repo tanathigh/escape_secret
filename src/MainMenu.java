@@ -37,7 +37,7 @@ public class MainMenu extends Canvas {
 				newGame();
 			}
 			if (event.getCode() == KeyCode.I) {
-				SceneManager.gotoSceneOf(ins);
+				SceneManager.gotoInstruction();
 			}
 			if (event.getCode() == KeyCode.ESCAPE) {
 				Platform.exit();
