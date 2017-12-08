@@ -8,7 +8,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,7 +31,7 @@ public class GameMain extends Application {
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG1.jpg"));
 	ImageView background = new ImageView(backgroundImg);
 	LevelData levelData = new LevelData();
-	AudioClip song;
+	MediaPlayer song = new MediaPlayer(new Media(getClass().getResource("DarkCave.mp3").toString()));
 	AudioClip scream = new AudioClip(ClassLoader.getSystemResource("ScreamSound.mp3").toString());
 
 	public static final int BLOCK_SIZE = 45;
@@ -270,8 +274,11 @@ public class GameMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initContent(stage);
-		song = new AudioClip(ClassLoader.getSystemResource("DarkCave.mp3").toString());
-		song.setCycleCount(AudioClip.INDEFINITE);
+		song.setOnEndOfMedia(new Runnable() {
+			public void run() {
+				song.seek(Duration.ZERO);
+			}
+		});
 		song.play();
 		/*
 		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->
