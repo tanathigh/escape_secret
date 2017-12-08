@@ -112,8 +112,8 @@ public class GameMain extends Application {
 		
 		//================circlr==================
 		gc.fillRect(0, 0, 3392, 620);
-		clearCircle(player.getTranslateX(),
-		player.getTranslateY(), 200, gc);
+		clearCircle(player.getTranslateX() + player.width/2,
+		player.getTranslateY() + player.height/2, 200, gc);
 		//=======================================
 		
 		gameRoot.getChildren().add(player);
@@ -243,8 +243,8 @@ public class GameMain extends Application {
 		//===========================cirlce================
 		gc.clearRect(0, 0, 3392, 620); gc.fillRect(0, 0, 3392, 620);
 		 
-		clearCircle(player.getTranslateX() + player.getWidth(),
-		player.getTranslateY() + player.getHeight(), 200, gc);
+		clearCircle(player.getTranslateX() + player.getWidth()/2,
+		player.getTranslateY() + player.getHeight()/2, 200, gc);
 		//=================================================
 
 		/*
