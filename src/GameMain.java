@@ -134,6 +134,7 @@ public class GameMain extends Application {
 			exits.clear();
 			gameRoot.getChildren().clear();
 			appRoot.getChildren().clear();
+			keys.clear();
 			initContent(stage);
 			SceneManager.gotoMainMenu();
 		}
