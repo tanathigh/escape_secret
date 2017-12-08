@@ -45,6 +45,7 @@ public class GameMain extends Application {
 
 	Canvas canvas;
 	GraphicsContext gc;
+	DeadText dead;
 
 	private void initContent(int stage) {
 
@@ -219,6 +220,9 @@ public class GameMain extends Application {
 
 							if (player.isDead == true) {
 								countLife--;
+								dead = new DeadText();
+								gameRoot.getChildren().add(dead);
+								dead.requestFocus();
 								player.setTranslateX(0);
 								player.setTranslateY(400);
 								gameRoot.setLayoutX(0);
