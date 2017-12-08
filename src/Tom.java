@@ -47,7 +47,8 @@ public class Tom extends Entity {
 				}
 			}
 			for (Node platform : GameMain.platforms) {
-				if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+				if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) 
+				{
 					if (movingRight) {
 						if (this.getTranslateX() + GameMain.CHAR_SIZE_X == platform.getTranslateX()) {
 							this.setTranslateX(this.getTranslateX() - 1);
