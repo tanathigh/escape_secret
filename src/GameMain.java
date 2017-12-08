@@ -271,7 +271,7 @@ public class GameMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		initContent(stage);
 		song = new AudioClip(ClassLoader.getSystemResource("DarkCave.mp3").toString());
-		song.setCycleCount(99);
+		song.setCycleCount(AudioClip.INDEFINITE);
 		song.play();
 		/*
 		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->
