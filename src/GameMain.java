@@ -109,11 +109,13 @@ public class GameMain extends Application {
 		// *****************************************************
 		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
-		/*
-		 * gc.fillRect(0, 0, 3392, 620); // gc.clearRect(player.getTranslateX()-50,
-		 * player.getTranslateY()-100, 200, // 200); clearCircle(player.getTranslateX(),
-		 * player.getTranslateY(), 200, gc);
-		 */
+		
+		//================circlr==================
+		gc.fillRect(0, 0, 3392, 620);
+		clearCircle(player.getTranslateX(),
+		player.getTranslateY(), 200, gc);
+		//=======================================
+		
 		gameRoot.getChildren().add(player);
 		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
@@ -237,14 +239,13 @@ public class GameMain extends Application {
 		 * player.playerVelocity = player.playerVelocity.add(0, 1); } player.jumpY((int)
 		 * player.playerVelocity.getY());
 		 */
-
-		/*
-		 * gc.clearRect(0, 0, 3392, 620); gc.fillRect(0, 0, 3392, 620);
-		 */
-		// gc.clearRect(player.getTranslateX()-50, player.getTranslateY()-100, 200,
-		// 200);
-		// clearCircle(player.getTranslateX() + player.getWidth(),
-		// player.getTranslateY() + player.getHeight(), 200, gc);
+		
+		//===========================cirlce================
+		gc.clearRect(0, 0, 3392, 620); gc.fillRect(0, 0, 3392, 620);
+		 
+		clearCircle(player.getTranslateX() + player.getWidth(),
+		player.getTranslateY() + player.getHeight(), 200, gc);
+		//=================================================
 
 		/*
 		 * if (player.isDead == true) { player.setTranslateX(0);
