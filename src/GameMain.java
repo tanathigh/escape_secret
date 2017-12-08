@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,8 @@ public class GameMain extends Application {
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG1.jpg"));
 	ImageView background = new ImageView(backgroundImg);
 	LevelData levelData = new LevelData();
+	AudioClip song = new AudioClip(ClassLoader.getSystemResource("DarkCave.wav").toString());
+	AudioClip scream = new AudioClip(ClassLoader.getSystemResource("ScreamSound.mp3").toString());
 
 	public static final int BLOCK_SIZE = 45;
 	public static final int CHAR_SIZE_X = 38;
@@ -109,13 +112,12 @@ public class GameMain extends Application {
 		// *****************************************************
 		canvas = new Canvas(3392, 620);
 		gc = canvas.getGraphicsContext2D();
-		
-		//================circlr==================
+
+		// ================circlr==================
 		gc.fillRect(0, 0, 3392, 620);
-		clearCircle(player.getTranslateX() + player.width/2,
-		player.getTranslateY() + player.height/2, 200, gc);
-		//=======================================
-		
+		clearCircle(player.getTranslateX() + player.width / 2, player.getTranslateY() + player.height / 2, 200, gc);
+		// =======================================
+
 		gameRoot.getChildren().add(player);
 		gameRoot.getChildren().add(canvas);
 		appRoot.getChildren().addAll(background, gameRoot);
@@ -210,6 +212,7 @@ public class GameMain extends Application {
 								player.jumpY((int) player.playerVelocity.getY());
 
 								if (player.isDead == true) {
+									scream.play();
 									playerMove = false;
 									player.isDead = false;
 									countLife--;
@@ -239,13 +242,14 @@ public class GameMain extends Application {
 		 * player.playerVelocity = player.playerVelocity.add(0, 1); } player.jumpY((int)
 		 * player.playerVelocity.getY());
 		 */
-		
-		//===========================cirlce================
-		gc.clearRect(0, 0, 3392, 620); gc.fillRect(0, 0, 3392, 620);
-		 
-		clearCircle(player.getTranslateX() + player.getWidth()/2,
-		player.getTranslateY() + player.getHeight()/2, 200, gc);
-		//=================================================
+
+		// ===========================cirlce================
+		gc.clearRect(0, 0, 3392, 620);
+		gc.fillRect(0, 0, 3392, 620);
+
+		clearCircle(player.getTranslateX() + player.getWidth() / 2, player.getTranslateY() + player.getHeight() / 2,
+				200, gc);
+		// =================================================
 
 		/*
 		 * if (player.isDead == true) { player.setTranslateX(0);
@@ -266,6 +270,9 @@ public class GameMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initContent(stage);
+		song = new AudioClip(ClassLoader.getSystemResource("DarkCave.wav").toString());
+		song.setCycleCount(999);
+		song.play();
 		/*
 		 * Scene scene = new Scene(appRoot, 1280, 620); scene.setOnKeyPressed(event ->
 		 * keys.put(event.getCode(), true)); scene.setOnKeyReleased(event -> {
