@@ -20,8 +20,7 @@ public class GameMain extends Application {
 
 	public static int countLife = 3;
 	private static int stage = 1;
-	private long delayTime = 0;
-	private long currentTime = 0;
+	public static boolean playerMove = true;
 	public static boolean nextDoorIsOpen = false;
 
 	Image backgroundImg = new Image(getClass().getResourceAsStream("BG1.jpg"));
@@ -121,8 +120,6 @@ public class GameMain extends Application {
 	}
 
 	private void update() {
-		currentTime = System.currentTimeMillis();
-		// delayTime = System.currentTimeMillis() + 2000;
 		if (countLife == 0 || stage > 3) {
 			stage = 1;
 			countLife = 3;
@@ -135,7 +132,7 @@ public class GameMain extends Application {
 			initContent(stage);
 			SceneManager.gotoMainMenu();
 		}
-		if (countLife > 0 && currentTime > delayTime) {
+		if (countLife > 0) {
 			if (nextDoorIsOpen == true) {
 				nextDoorIsOpen = false;
 				stage++;
@@ -186,45 +183,49 @@ public class GameMain extends Application {
 				});
 				bot.start();
 			}
-			Thread mainPlayer = new Thread(new Runnable() {
-				public void run() {
-					Platform.runLater(new Runnable() {
-						public void run() {
-							if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
-								player.jumpPlayer();
-							}
-							if (isPressed(KeyCode.LEFT) && player.getTranslateX() >= 5) {
-								player.setScaleX(-1);
-								player.animation.play();
-								player.walkX(-5);
-							}
-							if (isPressed(KeyCode.RIGHT) && player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
-								player.setScaleX(1);
-								player.animation.play();
-								player.walkX(5);
-							}
-							if (player.playerVelocity.getY() < 10) {
-								player.playerVelocity = player.playerVelocity.add(0, 1);
-							}
-							player.jumpY((int) player.playerVelocity.getY());
+			if (playerMove == true) {
+				Thread mainPlayer = new Thread(new Runnable() {
+					public void run() {
+						Platform.runLater(new Runnable() {
+							public void run() {
+								if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
+									player.jumpPlayer();
+								}
+								if (isPressed(KeyCode.LEFT) && player.getTranslateX() >= 5) {
+									player.setScaleX(-1);
+									player.animation.play();
+									player.walkX(-5);
+								}
+								if (isPressed(KeyCode.RIGHT)
+										&& player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
+									player.setScaleX(1);
+									player.animation.play();
+									player.walkX(5);
+								}
+								if (player.playerVelocity.getY() < 10) {
+									player.playerVelocity = player.playerVelocity.add(0, 1);
+								}
+								player.jumpY((int) player.playerVelocity.getY());
 
-							if (player.isDead == true) {
-								player.isDead = false;
-								countLife--;
-								dead = new DeadText();
-								gameRoot.getChildren().add(dead);
-								dead.requestFocus();
-								player.setTranslateX(100);
-								player.setTranslateY(450);
-								gameRoot.setLayoutX(0);
-								background.setLayoutX(0);
+								if (player.isDead == true) {
+									playerMove = false;
+									player.isDead = false;
+									countLife--;
+									dead = new DeadText();
+									gameRoot.getChildren().add(dead);
+									dead.requestFocus();
+									player.setTranslateX(100);
+									player.setTranslateY(450);
+									gameRoot.setLayoutX(0);
+									background.setLayoutX(0);
+								}
 							}
-						}
-					});
+						});
 
-				}
-			});
-			mainPlayer.start();
+					}
+				});
+				mainPlayer.start();
+			}
 		}
 		/*
 		 * if (isPressed(KeyCode.UP) && player.getTranslateY() >= 5) {
