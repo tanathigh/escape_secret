@@ -16,8 +16,8 @@ public class Instruction extends Canvas{
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setFill(Color.WHITE);
 		gc.setFont(FONT);
-		gc.fillText("<^v> - Move", 1280 / 2, 620 / 4);
-		gc.fillText("Spacebar - Jump", 1280 / 2, 620 / 2);
+		gc.fillText("<v> - Move", 1280 / 2, 620 / 4);
+		gc.fillText("^ - Jump", 1280 / 2, 620 / 2);
 		gc.fillText("Press any key to return to main menu", 1280 / 2, 620 * 4 / 5);
 		addKeyEventHandler();
 	}
