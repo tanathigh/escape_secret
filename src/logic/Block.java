@@ -1,10 +1,12 @@
+package logic;
+import application.GameMain;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Block extends Pane {
-	ImageView block = new ImageView(new Image(getClass().getResourceAsStream("obAll.png")));
+	ImageView block = new ImageView(new Image(ClassLoader.getSystemResource("obAll.png").toString()));
 
 	public enum BlockType {
 		FLOOR_DOWN, FLOOR_UP, BRICK, DOOR_UP, DOOR_DOWN, STONE, BOX, INVISIBLE_BLOCK;

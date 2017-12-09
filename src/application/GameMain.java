@@ -1,3 +1,4 @@
+package application;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,6 +13,17 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import logic.Block;
+import logic.DeadTree;
+import logic.Decoration;
+import logic.Exit;
+import logic.Insect;
+import logic.Minotaur;
+import logic.Tom;
+import logic.Trap;
+import map.LevelData;
+import ui.DeadText;
+import window.SceneManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,17 +33,17 @@ public class GameMain extends Application {
 	public static ArrayList<Trap> killers = new ArrayList<>();
 	public static ArrayList<Exit> exits = new ArrayList<>();
 	public static ArrayList<Decoration> decorations = new ArrayList<>();
-	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+	public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
 	public static int countLife = 3;
 	private static int stage = 1;
 	public static boolean playerMove = true;
 	public static boolean nextDoorIsOpen = false;
 
-	Image backgroundImg = new Image(getClass().getResourceAsStream("BG1.jpg"));
+	Image backgroundImg = new Image(ClassLoader.getSystemResource("BG1.jpg").toString());
 	ImageView background = new ImageView(backgroundImg);
 	LevelData levelData = new LevelData();
-	MediaPlayer song = new MediaPlayer(new Media(getClass().getResource("DarkCave.mp3").toString()));
+	MediaPlayer song = new MediaPlayer(new Media(ClassLoader.getSystemResource("DarkCave.mp3").toString()));
 	AudioClip scream = new AudioClip(ClassLoader.getSystemResource("ScreamSound.mp3").toString());
 
 	public static final int BLOCK_SIZE = 45;
@@ -65,7 +77,7 @@ public class GameMain extends Application {
 		background.setLayoutX(0);
 		player.translateXProperty().addListener((obs, old, newValue) -> {
 			int offset = newValue.intValue();
-			if (offset > 640 && offset < levelData.levelWidth - 640) {
+			if (offset > 640 && offset < levelData.getLevelWidth() - 640) {
 				gameRoot.setLayoutX(-(offset - 640));
 				background.setLayoutX(-(offset - 640));
 			}
@@ -119,7 +131,7 @@ public class GameMain extends Application {
 
 		// ================circlr==================
 		gc.fillRect(0, 0, 3392, 620);
-		clearCircle(player.getTranslateX() + player.width / 2, player.getTranslateY() + player.height / 2, 200, gc);
+		clearCircle(player.getTranslateX() + player.getEntityWidth() / 2, player.getTranslateY() + player.getEntityHeight() / 2, 200, gc);
 		// =======================================
 
 		gameRoot.getChildren().add(player);
@@ -205,7 +217,7 @@ public class GameMain extends Application {
 									player.walkX(-5);
 								}
 								if (isPressed(KeyCode.RIGHT)
-										&& player.getTranslateX() + 40 <= levelData.levelWidth - 5) {
+										&& player.getTranslateX() + 40 <= levelData.getLevelWidth() - 5) {
 									player.setScaleX(1);
 									player.animation.play();
 									player.walkX(5);
@@ -215,10 +227,10 @@ public class GameMain extends Application {
 								}
 								player.jumpY((int) player.playerVelocity.getY());
 
-								if (player.isDead == true) {
+								if (player.isDead() == true) {
 									scream.play();
 									playerMove = false;
-									player.isDead = false;
+									player.setDead(false);
 									countLife--;
 									dead = new DeadText();
 									gameRoot.getChildren().add(dead);

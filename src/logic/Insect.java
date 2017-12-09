@@ -1,3 +1,4 @@
+package logic;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +8,6 @@ public class Insect extends Monster {
 
 	public Insect() {
 		super(4, 4, 0, 0, 32, 40);
-		imageView = new ImageView(new Image(getClass().getResourceAsStream("insect.png")));
+		imageView = new ImageView(new Image(ClassLoader.getSystemResource("insect.png").toString()));
 	}
 }

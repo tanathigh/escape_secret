@@ -1,3 +1,5 @@
+package logic;
+import application.GameMain;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -15,16 +17,16 @@ public abstract class Monster extends Entity {
 		this.columns = columns;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		this.width = width;
-		this.height = height;
+		this.setWidth(width);
+		this.setHeight(height);
 	}
 
 	public void run() {
-		imageView.setFitHeight(height);
-		imageView.setFitWidth(width);
-		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
-		animation = new Animation(this.imageView, Duration.millis(800), count, columns, offsetX, offsetY, width,
-				height);
+		imageView.setFitHeight(getHeight());
+		imageView.setFitWidth(getWidth());
+		imageView.setViewport(new Rectangle2D(offsetX, offsetY, getWidth(), getHeight()));
+		animation = new Animation(this.imageView, Duration.millis(800), count, columns, offsetX, offsetY, getEntityWidth(),
+				getEntityHeight());
 		getChildren().addAll(this.imageView);
 	}
 
@@ -33,11 +35,11 @@ public abstract class Monster extends Entity {
 		boolean movingRight = value > 0;
 		for (int i = 0; i < Math.abs(value); i++) {
 			if (getBoundsInParent().intersects(GameMain.player.getBoundsInParent()))
-				GameMain.player.isDead = true;
+				GameMain.player.setDead(true);
 			for (Node platform : GameMain.platforms) {
 				if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
 					if (movingRight) {
-						if (this.getTranslateX() + this.width == platform.getTranslateX()) {
+						if (this.getTranslateX() + this.getWidth() == platform.getTranslateX()) {
 							this.setTranslateX(this.getTranslateX() - 1);
 							this.setScaleX(-1);
 							direction *= -1;

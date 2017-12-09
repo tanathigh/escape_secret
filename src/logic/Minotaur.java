@@ -1,3 +1,4 @@
+package logic;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +8,6 @@ public class Minotaur extends Monster {
 
 	public Minotaur() {
 		super(7, 7, 0, 0, 100, 100);
-		imageView = new ImageView(new Image(getClass().getResourceAsStream("minotaur.png")));
+		imageView = new ImageView(new Image(ClassLoader.getSystemResource("minotaur.png").toString()));
 	}
 }

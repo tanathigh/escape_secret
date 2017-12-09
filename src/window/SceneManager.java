@@ -1,7 +1,10 @@
+package window;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import ui.Instruction;
+import ui.MainMenu;
 
 public final class SceneManager {
 	private static Stage primaryStage;

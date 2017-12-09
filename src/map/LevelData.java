@@ -1,8 +1,17 @@
+package map;
+import logic.Block;
+import logic.Decoration;
+import logic.Exit;
+import logic.Trap;
+import logic.Block.BlockType;
+import logic.Decoration.DecType;
+import logic.Exit.ExitType;
+
 public class LevelData {
 	public static String[][] level;
 	public static final int BLOCK_SIZE = 45;
 	int levelNumber = 0;
-	int levelWidth = 0;
+	private int levelWidth = 0;
 
 	public LevelData() {
 	}
@@ -15,7 +24,7 @@ public class LevelData {
 		} else {
 			level = new String[][] { LevelMap.LEVEL3 };
 		}
-		levelWidth = level[levelNumber][0].length() * BLOCK_SIZE;
+		setLevelWidth(level[levelNumber][0].length() * BLOCK_SIZE);
 		for (int i = 0; i < level[levelNumber].length; i++) {
 			String line = level[levelNumber][i];
 			for (int j = 0; j < line.length(); j++) {
@@ -92,5 +101,13 @@ public class LevelData {
 				}
 			}
 		}
+	}
+
+	public int getLevelWidth() {
+		return levelWidth;
+	}
+
+	public void setLevelWidth(int levelWidth) {
+		this.levelWidth = levelWidth;
 	}
 }

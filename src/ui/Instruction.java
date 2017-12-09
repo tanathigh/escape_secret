@@ -1,8 +1,10 @@
+package ui;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import window.SceneManager;
 
 public class Instruction extends Canvas{
 	private static final Font FONT = new Font("Monospace", 40);

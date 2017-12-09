@@ -1,3 +1,4 @@
+package map;
 public class LevelMap {
 	static String[] LEVEL1 = new String[] {
 			"2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*",

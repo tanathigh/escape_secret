@@ -1,3 +1,5 @@
+package logic;
+import application.GameMain;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -7,24 +9,24 @@ import javafx.util.Duration;
 
 public class Tom extends Entity {
 	public Point2D playerVelocity = new Point2D(0, 0);
-	public boolean isDead = false;
+	private boolean isDead = false;
 	protected boolean canJump = true;
-	ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("tom.png")));
+	ImageView imageView = new ImageView(new Image(ClassLoader.getSystemResource("tom.png").toString()));
 
 	public Tom() {
 		this.count = 4;
 		this.columns = 4;
 		this.offsetX = 0;
 		this.offsetY = 0;
-		this.width = 38;
-		this.height = 55;
+		this.setWidth(38);
+		this.setHeight(55);
 	}
 
 	public void run() {
 		imageView.setFitWidth(38);
 		imageView.setFitHeight(55);
-		imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
-		animation = new Animation(imageView, Duration.millis(800), count, columns, offsetX, offsetY, width, height);
+		imageView.setViewport(new Rectangle2D(offsetX, offsetY, getWidth(), getHeight()));
+		animation = new Animation(imageView, Duration.millis(800), count, columns, offsetX, offsetY, getEntityWidth(), getEntityHeight());
 		if (getChildren().contains(imageView)) {
 			getChildren().clear();
 		} else {
@@ -38,7 +40,7 @@ public class Tom extends Entity {
 		for (int i = 0; i < Math.abs(value); i++) {
 			for (Trap killer : GameMain.killers) {
 				if (getBoundsInParent().intersects(killer.getBoundsInParent())) {
-					isDead = true;
+					setDead(true);
 				}
 			}
 			for (Exit button : GameMain.exits) {
@@ -71,7 +73,7 @@ public class Tom extends Entity {
 		for (int i = 0; i < Math.abs(value); i++) {
 			for (Trap killer : GameMain.killers) {
 				if (getBoundsInParent().intersects(killer.getBoundsInParent())) {
-					isDead = true;
+					setDead(true);
 				}
 			}
 			for (Block platform : GameMain.platforms) {
@@ -93,7 +95,7 @@ public class Tom extends Entity {
 			}
 			this.setTranslateY(this.getTranslateY() + (movingDown ? 1 : -1));
 			if (this.getTranslateY() > 640) {
-				this.isDead = true;
+				this.setDead(true);
 			}
 		}
 	}
@@ -103,5 +105,13 @@ public class Tom extends Entity {
 			playerVelocity = playerVelocity.add(0, -28);
 			canJump = false;
 		}
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 }

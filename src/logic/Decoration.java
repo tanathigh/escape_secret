@@ -1,10 +1,12 @@
+package logic;
+import application.GameMain;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Decoration extends Pane {
-	ImageView dec = new ImageView(new Image(getClass().getResourceAsStream("decoration.png")));
+	ImageView dec = new ImageView(new Image(ClassLoader.getSystemResource("decoration.png").toString()));
 
 	public enum DecType {
 		ENTRANCE, FAKE_EXIT, STONE, SKULL, SKULL_LONG, ICE1, ICE2, MUSHROOM, MUSHROOM_LONG;

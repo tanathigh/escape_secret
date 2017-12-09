@@ -1,3 +1,5 @@
+package ui;
+import application.GameMain;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -15,7 +17,7 @@ public class DeadText extends Canvas {
 	public DeadText() {
 		super(1280, 620);
 		gc = this.getGraphicsContext2D();
-		bg = new Image("deadBG.png");
+		bg = new Image(ClassLoader.getSystemResource("deadBG.png").toString());
 		gc.drawImage(bg, 0, 0);
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setFill(Color.RED);

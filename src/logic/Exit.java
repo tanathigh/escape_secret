@@ -1,10 +1,12 @@
+package logic;
+import application.GameMain;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Exit extends Pane {
-	ImageView exit = new ImageView(new Image(getClass().getResourceAsStream("exit.jpg")));
+	ImageView exit = new ImageView(new Image(ClassLoader.getSystemResource("exit.jpg").toString()));
 
 	public enum ExitType {
 		EXIT_UP, EXIT_OUT

@@ -1,10 +1,12 @@
+package logic;
+import application.GameMain;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Trap extends Pane {
-	Image TrapImg = new Image(getClass().getResourceAsStream("floor_trap.png"));
+	Image TrapImg = new Image(ClassLoader.getSystemResource("floor_trap.png").toString());
 	ImageView trap;
 
 	public Trap(int x, int y) {
